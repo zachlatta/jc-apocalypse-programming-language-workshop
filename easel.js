@@ -1,5 +1,6 @@
 import fs from 'fs'
 import stdlib, { EaselError } from './stdlib.js'
+import { Lexer } from './lexer.js'
 
 const readFile = location =>
   new Promise((resolve, reject) =>
@@ -17,17 +18,21 @@ const writeFile = (location, data) =>
     })
   )
 
-;(async () => {
-  let argv = process.argv.slice(2)
-  const debug = argv.find(cmd => cmd === '--dbg') ? true : false
-  argv = argv.filter(arg => arg !== '--dbg')
+  ; (async () => {
+    let argv = process.argv.slice(2)
+    const debug = argv.find(cmd => cmd === '--dbg') ? true : false
+    argv = argv.filter(arg => arg !== '--dbg')
 
-  const location = argv[0]
-  if (location) {
-    const program = await readFile(location)
+    const location = argv[0]
+    if (location) {
+      const program = await readFile(location)
 
-    // TODO: Run our program!
-  } else {
-    // Interactive REPL
-  }
-})()
+      // TODO: Run our program!
+      let lexer = new Lexer(program)
+
+      console.log(lexer.scanTokens())
+
+    } else {
+      // Interactive REPL
+    }
+  })()

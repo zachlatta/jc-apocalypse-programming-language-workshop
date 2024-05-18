@@ -1,2 +1,6 @@
 prepare rows as 50
 ink(rows + 20)
+
+function hi() {
+  
+}
